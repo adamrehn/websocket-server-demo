@@ -39,11 +39,11 @@ WebsocketServer::WebsocketServer()
 void WebsocketServer::run(int port)
 {
 	//Listen on the specified port number and start accepting connections
-	endpoint.listen(port);
-	endpoint.start_accept();
+	this->endpoint.listen(port);
+	this->endpoint.start_accept();
 	
 	//Start the Asio event loop
-	endpoint.run();
+	this->endpoint.run();
 }
 
 size_t WebsocketServer::numConnections()
@@ -81,7 +81,7 @@ void WebsocketServer::onOpen(ClientConnection conn)
 		std::lock_guard<std::mutex> lock(this->connectionListMutex);
 		
 		//Add the connection handle to our list of open connections
-		openConnections.push_back(conn);
+		this->openConnections.push_back(conn);
 	}
 	
 	//Invoke any registered handlers
