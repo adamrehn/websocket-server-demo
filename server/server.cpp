@@ -33,18 +33,18 @@ int main(int argc, char* argv[])
 			std::clog << "There are now " << server.numConnections() << " open connections." << std::endl;
 		});
 	});
-	server.message("myMessage", [&mainEventLoop, &server](ClientConnection conn, const Json::Value& args)
+	server.message("message", [&mainEventLoop, &server](ClientConnection conn, const Json::Value& args)
 	{
 		mainEventLoop.post([conn, args, &server]()
 		{
-			std::clog << "myMessage handler on the main thread" << std::endl;
+			std::clog << "message handler on the main thread" << std::endl;
 			std::clog << "Message payload:" << std::endl;
 			for (auto key : args.getMemberNames()) {
 				std::clog << "\t" << key << ": " << args[key].asString() << std::endl;
 			}
 			
 			//Echo the message pack to the client
-			server.sendMessage(conn, "myMessage", args);
+			server.sendMessage(conn, "message", args);
 		});
 	});
 	
